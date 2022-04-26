@@ -1,155 +1,150 @@
 <!DOCTYPE html>
 <html lang="en_us">
-<head>
-	<title>Card System</title>
-	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-	* {box-sizing: border-box}
+	<head> 
+		<title>Card System</title> 
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"> 
+		<style>
+			* {box-sizing: border-box}
 
-	/* Set height of body and the document to 100% */
-	body, html {
-		height: 100%;
-		margin: 1;
-		font-family: Arial;
-	}
+			/* Set height of body and the document to 100% */
+			body, html {
+				height: 100%;
+				margin: 1;
+				font-family: Arial;
+			}
 
-	/* Style tab links */
-	.tablink {
-		background-color: #ebebeb;
-		color: black;
-		float: left;
-		border: 2px solid white;
-		outline: none;
-		cursor: pointer;
-		padding: 14px 16px;
-		font-size: 17px;
-		width: 25%;
-	}
-	.title {
-		padding: 1px;
-		text-align: center;
-		font-weight: bold;
-		font-size: 30px;
-	}
+			/* Style tab links */
+			.tablink {
+				background-color: #ebebeb;
+				color: black;
+				float: left;
+				border: 2px solid white;
+				outline: none;
+				cursor: pointer;
+				padding: 14px 16px;
+				font-size: 17px;
+				width: 25%;
+			}
+			.title {
+				padding: 1px;
+				text-align: center;
+				font-weight: bold;
+				font-size: 30px;
+			}
 
-	.tablink:hover {
-		background-color: #cccccc;
-	}
+			.tablink:hover {
+				background-color: #cccccc;
+			}
 
-	/* Global variables */
-	:root { 
-		--HillelRed: #E03A3E;
-		--white: #ffffff; 
-	}
+			/* Global variables */
+			:root { 
+				--HillelRed: #E03A3E;
+				--white: #ffffff; 
+			}
 
-	/* Style the tab content (and add height:100% for full page content) */
-	.tabcontent {
-		color: black;
-		display: none;
-		padding: 50px 20px;
-		height: 100%;
-		background-color: white;
-	}
-	</style>
-</head>
+			/* Style the tab content (and add height:100% for full page content) */
+			.tabcontent {
+				color: black;
+				display: none;
+				padding: 50px 20px;
+				height: 100%;
+				background-color: white;
+			}
+			</style> 
+	</head> 
+	<body> 
+		<div> 
+			<img src="https://marylandhillel.org/wp-content/uploads/2019/11/maryland-hillel-logo-mem-dot-red-horizontal.png" alt="Maryland Hillel Logo" style="height:70px; vertical-align: middle;"> 
+			<span class="title">Card Scanner System</span> 
+		</div> 
+		<div style="clear: left;"> 
+			<button class="tablink" onclick="openPage('Scan', this, 'var(--HillelRed)')" id="defaultOpen">Scan</button> 
+			<button class="tablink" onclick="openPage('Students', this, 'var(--HillelRed)')">Students</button> 
+			<button class="tablink" onclick="openPage('Statistics', this, 'var(--HillelRed)')">Statistics</button> 
+			<button class="tablink" onclick="openPage('Settings', this, 'var(--HillelRed)')">Settings</button> 
+		</div> 
+		<div id="Scan" class="tabcontent"> 
+			<label for="mealtype">Meal</label> 
+			<select id="mealtype" name="mealtype"> 
+			<!-- Change this to a radio button or something --> 
+				<option value="Breakfast">Breakfast</option> 
+				<option value="Lunch">Lunch</option> 
+				<option value="Dinner">Dinner</option> 
+			</select> 
+			<label for="date">Date</label> 
+			<input type="date" id="date" name="date"> 
+			<br> 
+			<input type="radio" id="Regular" name="action" checked> 
+			<label for="Regular">Regular Meal</label> 
+			<input type="radio" id="Guest" name="action"> 
+			<label for="Guest">Guest Meal</label> 
+			<input type="radio" id="Check" name="action"> 
+			<label for="Check">Check Meals Remaining</label> 
+			<br> 
+			<label for="barcode">Barcode</label> 
+			<input type="text" size="40" id="barcode" name="barcode" onkeypress="catchKeys(event)" placeholder="21430..." autofocus> 
+			<p id="JStext"></p> 
+		</div> 
+		<div id="Students" class="tabcontent"> 
+			<h3>Students</h3> 
+			<p>Blah blah</p> 
+		</div> 
+		<div id="Statistics" class="tabcontent"> 
+			<h3>Statistics</h3> 
+			<p>Blah blah</p> 
+		</div> 
+		<div id="Settings" class="tabcontent"> 
+			<h3>Settings</h3> 
+			<p>Blah blah</p> 
+		</div> 
+		<script>
+			function openPage(pageName,elmnt,color) {
+				var i, tabcontent, tablinks;
+				tabcontent = document.getElementsByClassName("tabcontent");
+				for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+				}
+				tablinks = document.getElementsByClassName("tablink");
+				for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].style.backgroundColor = "";
+					tablinks[i].style.color = "";
+				}
+				document.getElementById(pageName).style.display = "block";
+				elmnt.style.backgroundColor = color;
+				elmnt.style.color = "white";
+				if(pageName == "Scan")
+					document.getElementById("barcode").focus(); // Always make sure we'd ready to enter a barcode
 
-<body>
-<div>
-	<img src="https://marylandhillel.org/wp-content/uploads/2019/11/maryland-hillel-logo-mem-dot-red-horizontal.png" alt="Maryland Hillel Logo" style="height:70px; vertical-align: middle;">
-	<span class="title">Card Scanner System</span>
-</div>
-<div style="clear: left;">
-<button class="tablink" onclick="openPage('Scan', this, 'var(--HillelRed)')" id="defaultOpen">Scan</button>
-<button class="tablink" onclick="openPage('Students', this, 'var(--HillelRed)')">Students</button>
-<button class="tablink" onclick="openPage('Statistics', this, 'var(--HillelRed)')">Statistics</button>
-<button class="tablink" onclick="openPage('Settings', this, 'var(--HillelRed)')">Settings</button>
-</div>
+			}
+			function catchKeys(event) {
+				var c = event.charCode;
+				if(String.fromCharCode(c) == "\n") { // return key doesn't actually get sent via event
+					document.getElementById("JStext").innerHTML = "Got return key";
+					document.getElementById("barcode").value = ""; // clear text box
+				}
+				else
+					document.getElementById("JStext").innerHTML = "Other";
+			}
 
-<div id="Scan" class="tabcontent">
-	<label for="mealtype">Meal</label>
-	<select id="mealtype" name="mealtype"> <!-- Change this to a radio button or something -->
-		<option value="Breakfast">Breakfast</option>
-		<option value="Lunch">Lunch</option>
-		<option value="Dinner">Dinner</option>
-	</select>
-	<label for="date">Date</label>
-  	<input type="date" id="date" name="date">
-  	<br>
-  	<input type="radio" id="Regular" name="action" checked="checked">
-	<label for="Regular">Regular Meal</label>
-	<input type="radio" id="Guest" name="action">
-	<label for="Guest">Guest Meal</label>
-	<input type="radio" id="Check" name="action">
-	<label for="Check">Check Meals Remaining</label>
-	<br>
-	<label for="barcode">Barcode</label>
-  	<input type="text" size="40" id="barcode" name="barcode" onkeypress="catchKeys(event)" placeholder="21430..." autofocus>
-  	<p id="JStext"></p>
-</div>
-
-<div id="Students" class="tabcontent">
-	<h3>Students</h3>
-	<p>Blah blah</p> 
-</div>
-
-<div id="Statistics" class="tabcontent">
-	<h3>Statistics</h3>
-	<p>Blah blah</p>
-</div>
-
-<div id="Settings" class="tabcontent">
-	<h3>Settings</h3>
-	<p>Blah blah</p>
-</div>
-
-<script>
-function openPage(pageName,elmnt,color) {
-	var i, tabcontent, tablinks;
-	tabcontent = document.getElementsByClassName("tabcontent");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
-	tablinks = document.getElementsByClassName("tablink");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].style.backgroundColor = "";
-		tablinks[i].style.color = "";
-	}
-	document.getElementById(pageName).style.display = "block";
-	elmnt.style.backgroundColor = color;
-	elmnt.style.color = "white";
-	if(pageName == "Scan")
-		document.getElementById("barcode").focus(); // Always make sure we'd ready to enter a barcode
-
-}
-function catchKeys(event) {
-	var c = event.charCode;
-	if(String.fromCharCode(c) == "\n") { // return key doesn't actually get sent via event
-		document.getElementById("JStext").innerHTML = "Got return key";
-		document.getElementById("barcode").value = ""; // clear text box
-	}
-	else
-		document.getElementById("JStext").innerHTML = "Other";
-}
-
-function setDefaultMeal(s) {
-	const d = new Date();
-	const hour = d.getHours();
-	var ind;
-	if(hour < 11) // Breakfast up to 11:00
-		ind = 0;
-	else if(hour < 15) // Lunch up to 15:00
-		ind = 1;
-	else
-		ind = 2;
-	s.options[ind].selected = true;
-}
-// Set the default meal to the one at this time of day
-setDefaultMeal(document.getElementById("mealtype"));
-// Open the scanning page by default
-document.getElementById("defaultOpen").click();
-// Set default date to today
-//document.getElementById("date").value = new Date().toDateInputValue(); // This doesn't work
-</script>
-	 
-</body>
-</html> 
+			function setDefaultMeal(s) {
+				const d = new Date();
+				const hour = d.getHours();
+				var ind;
+				if(hour < 11) // Breakfast up to 11:00
+					ind = 0;
+				else if(hour < 15) // Lunch up to 15:00
+					ind = 1;
+				else
+					ind = 2;
+				s.options[ind].selected = true;
+			}
+			// Set the default meal to the one at this time of day
+			setDefaultMeal(document.getElementById("mealtype"));
+			// Open the scanning page by default
+			document.getElementById("defaultOpen").click();
+			// Set default date to today, from https://stackoverflow.com/questions/14245339/pre-populating-date-input-field-with-javascript
+			let d = new Date();
+			document.getElementById("date").value = d.getFullYear().toString().padStart(4, '0') + '-' + (d.getMonth()+1).toString().padStart(2, '0') + '-' + d.getDate().toString().padStart(2, '0');
+		</script>   
+	</body>
+</html>
