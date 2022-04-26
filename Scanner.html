@@ -112,15 +112,20 @@
 				elmnt.style.backgroundColor = color;
 				elmnt.style.color = "white";
 			}
-			function catchKeys(event) {
+			function catchKeys(event) { // This will catch every single key event on the webpage
 				const isNumber = /^[0-9]$/i.test(event.key);
 				if(isNumber) {
 					barcode += event.key;
 					document.getElementById("JStext").innerHTML = barcode;
 				}
-				else if(event.key === "Enter" && barcode != "") { // If return key pressed
-					document.getElementById("JStext").innerHTML = "Query firebase for student " + barcode;
-					barcode = "";
+				else if(event.key === "Enter") { // If return key pressed
+					if(barcode != "") {
+						document.getElementById("JStext").innerHTML = "Query firebase for student " + barcode;
+						barcode = "";
+					}
+				}
+				else { // Deliver characters other than numbers and "enter" to other parts of webpage
+
 				}
 			}
 
