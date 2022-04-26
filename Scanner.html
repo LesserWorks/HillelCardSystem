@@ -117,13 +117,12 @@
 
 			}
 			function catchKeys(event) {
-				var c = event.charCode;
-				if(String.fromCharCode(c) == "\n") { // return key doesn't actually get sent via event
-					document.getElementById("JStext").innerHTML = "Got return key";
+				if(event.key === "Enter") { // If the textbox was submitted with a barcode
+					document.getElementById("JStext").innerHTML = "Here query firebase for student";
 					document.getElementById("barcode").value = ""; // clear text box
 				}
 				else
-					document.getElementById("JStext").innerHTML = "Other";
+					document.getElementById("JStext").innerHTML = "";
 			}
 
 			function setDefaultMeal(s) {
