@@ -26,8 +26,8 @@
 				width: 25%;
 			}
 			.title {
-				padding: 1px;
-				text-align: center;
+				padding: 10px;
+				float: left;
 				font-weight: bold;
 				font-size: 30px;
 			}
@@ -54,8 +54,9 @@
 	</head> 
 	<body> 
 		<div> 
-			<img src="https://marylandhillel.org/wp-content/uploads/2019/11/maryland-hillel-logo-mem-dot-red-horizontal.png" alt="Maryland Hillel Logo" style="height:70px; vertical-align: middle;"> 
+			<img src="https://marylandhillel.org/wp-content/uploads/2019/11/maryland-hillel-logo-mem-dot-red-horizontal.png" alt="Maryland Hillel Logo" style="height:70px; vertical-align: middle; float: left"> 
 			<span class="title">Card Scanner System</span> 
+			<p id="JStext" style="float: left"></p>
 		</div> 
 		<div style="clear: left;"> 
 			<button class="tablink" onclick="openPage('Scan', this, 'var(--HillelRed)')" id="defaultOpen">Scan</button> 
@@ -81,9 +82,6 @@
 			<input type="radio" id="Check" name="action"> 
 			<label for="Check">Check Meals Remaining</label> 
 			<br> 
-			<label for="barcode">Barcode</label> 
-			<input type="text" size="40" id="barcode" name="barcode" onkeypress="catchKeys(event)" placeholder="21430..." autofocus> 
-			<p id="JStext"></p> 
 		</div> 
 		<div id="Students" class="tabcontent"> 
 			<h3>Students</h3> 
@@ -98,6 +96,7 @@
 			<p>Blah blah</p> 
 		</div> 
 		<script>
+			var barcode = "";
 			function openPage(pageName,elmnt,color) {
 				var i, tabcontent, tablinks;
 				tabcontent = document.getElementsByClassName("tabcontent");
@@ -112,17 +111,17 @@
 				document.getElementById(pageName).style.display = "block";
 				elmnt.style.backgroundColor = color;
 				elmnt.style.color = "white";
-				if(pageName == "Scan")
-					document.getElementById("barcode").focus(); // Always make sure we'd ready to enter a barcode
-
 			}
 			function catchKeys(event) {
-				if(event.key === "Enter") { // If the textbox was submitted with a barcode
-					document.getElementById("JStext").innerHTML = "Here query firebase for student";
-					document.getElementById("barcode").value = ""; // clear text box
+				const isNumber = /^[0-9]$/i.test(event.key);
+				if(isNumber) {
+					barcode += event.key;
+					document.getElementById("JStext").innerHTML = barcode;
 				}
-				else
-					document.getElementById("JStext").innerHTML = "";
+				else if(event.key === "Enter" && barcode != "") { // If return key pressed
+					document.getElementById("JStext").innerHTML = "Query firebase for student " + barcode;
+					barcode = "";
+				}
 			}
 
 			function setDefaultMeal(s) {
@@ -141,6 +140,7 @@
 			setDefaultMeal(document.getElementById("mealtype"));
 			// Open the scanning page by default
 			document.getElementById("defaultOpen").click();
+			document.addEventListener("keydown", catchKeys); // This will catch the return key even when on another tab
 			// Set default date to today, from https://stackoverflow.com/questions/14245339/pre-populating-date-input-field-with-javascript
 			let d = new Date();
 			document.getElementById("date").value = d.getFullYear().toString().padStart(4, '0') + '-' + (d.getMonth()+1).toString().padStart(2, '0') + '-' + d.getDate().toString().padStart(2, '0');
